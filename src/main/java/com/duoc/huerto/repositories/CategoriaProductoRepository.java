@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.duoc.huerto.model.entities.CategoriaProduto;
 
 @Repository 
-public interface  CategoriaProductoRepository extends JpaRepository<CategoriaProduto, Integer> {
+public interface CategoriaProductoRepository extends JpaRepository<CategoriaProduto, Integer> {
     
 }
