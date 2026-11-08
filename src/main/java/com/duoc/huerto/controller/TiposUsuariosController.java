@@ -3,6 +3,8 @@ package com.duoc.huerto.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 
@@ -35,8 +37,12 @@ public class TiposUsuariosController {
     }
 
     @GetMapping("/{idTipoUsuario}")
-    public TiposUsuarios ObtenerTiposUsuariosPorId(@PathVariable int idTipoUsuario) {
-        return tiposUsuariosService.obtenerTiposDeUsuariosPorId(idTipoUsuario);
+    public EntityModel<TiposUsuarios> ObtenerTiposUsuariosPorId(@PathVariable int idTipoUsuario) {
+        TiposUsuarios tiposUsuarios = tiposUsuariosService.obtenerTiposDeUsuariosPorId(idTipoUsuario);
+        Link selfLink = linkTo(methodOn(TiposUsuariosController.class).obtenerTodosTiposUsuarios()).withRel("Obtener-todos-los-tipos-de-usuarios");
+        Link eliminarLink = linkTo(TiposUsuariosController.class).slash(idTipoUsuario).withRel("Eliminar-tipo-de-usuario-por-id");
+
+        return EntityModel.of(tiposUsuarios, selfLink, eliminarLink);
     }
     
     @PostMapping("")
