@@ -11,6 +11,8 @@ import com.duoc.huerto.services.CategoriaProductosService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 
@@ -35,8 +38,12 @@ public class CategoriaProductoController {
     }
     
     @GetMapping("/{idCategoria}")
-    public CategoriaProduto obtenerCategoriaPorId(@PathVariable  int idCategoria) {
-        return categoriaProductosService.obtenerCategoriaPorId(idCategoria);
+    public EntityModel<CategoriaProduto> obtenerCategoriaPorId(@PathVariable  int idCategoria) {
+        CategoriaProduto categoriaProducto = categoriaProductosService.obtenerCategoriaPorId(idCategoria);
+        Link selfLink = linkTo(methodOn(CategoriaProductoController.class).obtenerTodasLasCategorias()).withRel("Obtener-todas-las-categorias");
+        Link eliminarLink = linkTo(CategoriaProductoController.class).slash(idCategoria).withRel("Eliminar-categoria-producto-por-id");
+
+        return EntityModel.of(categoriaProducto, selfLink, eliminarLink);
     }
     
     @PostMapping("")
