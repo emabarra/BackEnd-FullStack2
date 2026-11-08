@@ -1,5 +1,7 @@
 package com.duoc.huerto.model.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import lombok.Data;
 @Entity 
 @Data 
 @Table (name = "tipos_usuarios")
-public class TiposUsuarios {
+public class TiposUsuarios extends RepresentationModel<TiposUsuarios>{
     
     @Id 
     @GeneratedValue (strategy = GenerationType.IDENTITY)
