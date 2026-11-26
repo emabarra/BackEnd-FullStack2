@@ -1,5 +1,6 @@
 package com.duoc.huerto.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,36 @@ public class CategoriaProductosService {
         productoEncontrado.setStockCritico(req.getStockCritico());
 
         return categoriaProductoRepository.save(categoria);
+    }
+
+    // Obtener un producto específico por su ID
+    public Producto obtenerProductoPorId(int idProducto) {
+        List<CategoriaProduto> categorias = categoriaProductoRepository.findAll();
+
+        for (CategoriaProduto categoria : categorias) {
+            if (categoria.getProductos() != null) {
+                for (Producto producto : categoria.getProductos()) {
+                    if (producto.getId_productos() == idProducto) {
+                        return producto;
+                    }
+                }
+            }
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el Producto con ID: " + idProducto);
+    }
+
+    // Obtener todos los productos
+    public List<Producto> obtenerTodosLosProductos() {
+        List<Producto> todosLosProductos = new ArrayList<>();
+        List<CategoriaProduto> categorias = categoriaProductoRepository.findAll();
+
+        for (CategoriaProduto categoria : categorias) {
+            if (categoria.getProductos() != null) {
+                todosLosProductos.addAll(categoria.getProductos());
+            }
+        }
+
+        return todosLosProductos;
     }
 }

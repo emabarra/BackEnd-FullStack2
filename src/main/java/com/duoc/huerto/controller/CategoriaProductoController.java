@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.duoc.huerto.model.entities.CategoriaProduto;
+import com.duoc.huerto.model.entities.Producto;
 import com.duoc.huerto.model.request.ActualizarCategoriaProducto;
 import com.duoc.huerto.model.request.ActualizarProducto;
 import com.duoc.huerto.model.request.AgregarCategoriaProducto;
@@ -46,6 +47,16 @@ public class CategoriaProductoController {
         Link eliminarLink = linkTo(CategoriaProductoController.class).slash(idCategoria).withRel("Eliminar-categoria-producto-por-id");
 
         return EntityModel.of(categoriaProducto, selfLink, eliminarLink);
+    }
+
+    @GetMapping("/producto")
+    public List<Producto> obtenerTodosLosProductos() {
+        return categoriaProductosService.obtenerTodosLosProductos();
+    }
+
+    @GetMapping("/producto/{idProducto}")
+    public Producto obtenerProductoPorId(@PathVariable int idProducto) {
+        return categoriaProductosService.obtenerProductoPorId(idProducto);
     }
     
     @PostMapping("")

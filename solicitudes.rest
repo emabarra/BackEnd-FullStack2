@@ -65,6 +65,14 @@ Content-Type: application/json
   "stockCritico": 15
 }
 
+### Obtener un producto por su ID
+GET {{baseUrl}}/api/categoria/producto/1
+Accept: application/json
+
+### Listar todos los productos
+GET {{baseUrl}}/api/categoria/producto
+Accept: application/json
+
 ### 5. Eliminar un producto por ID (DELETE)
 DELETE {{baseUrl}}/api/producto/1
 
