@@ -23,8 +23,8 @@ public class Usuarios {
     private int rut_usuario;
 
     @Column(nullable = false)
-    private String nombre_usuario, apellidos_usuario, correo_usuario, region_usuario, comuna_usuario; 
-
+    private String nombre_usuario, apellidos_usuario, correo_usuario, region_usuario, comuna_usuario, username, password; 
+    
     @ManyToOne 
     @JoinColumn(name = "id_tipoUsuario", nullable = false)
     private TiposUsuarios tiposUsuarios;
