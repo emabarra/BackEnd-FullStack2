@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.duoc.huerto.model.entities.CategoriaProduto;
+import com.duoc.huerto.model.entities.Producto;
 import com.duoc.huerto.model.request.ActualizarCategoriaProducto;
+import com.duoc.huerto.model.request.ActualizarProducto;
 import com.duoc.huerto.model.request.AgregarCategoriaProducto;
+import com.duoc.huerto.model.request.AgregarProducto;
 import com.duoc.huerto.repositories.CategoriaProductoRepository;
 
 @Service 
@@ -67,5 +70,49 @@ public class CategoriaProductosService {
         }
 
     }
+    
+    // Agregar producto a una categoría existente
+    public CategoriaProduto agregarProductoACategoria(AgregarProducto req) {
+        CategoriaProduto categoria = categoriaProductoRepository.findById(req.getIdCategoria())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado la Categoría"));
 
+        Producto nuevoProd = new Producto();
+        nuevoProd.setCodigoProducto(req.getCodigoProducto());
+        nuevoProd.setNombreProducto(req.getNombreProducto());
+        nuevoProd.setDescripcionProducto(req.getDescripcionProducto());
+        nuevoProd.setPrecioProductos(req.getPrecioProductos());
+        nuevoProd.setStockProducto(req.getStockProducto());
+        nuevoProd.setStockCritico(req.getStockCritico());
+        nuevoProd.setCategoriaProduto(categoria); // Enlaza la llave foránea id_categoria
+
+        categoria.getProductos().add(nuevoProd);
+        return categoriaProductoRepository.save(categoria);
+    }
+
+    // Actualizar un producto dentro de una categoría
+    public CategoriaProduto actualizarProductoEnCategoria(ActualizarProducto req) {
+        CategoriaProduto categoria = categoriaProductoRepository.findById(req.getIdCategoria())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado la Categoría"));
+
+        Producto productoEncontrado = null;
+        for (Producto p : categoria.getProductos()) {
+            if (p.getId_productos() == req.getIdProductos()) {
+                productoEncontrado = p;
+                break;
+            }
+        }
+
+        if (productoEncontrado == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el Producto en esta Categoría");
+        }
+
+        productoEncontrado.setCodigoProducto(req.getCodigoProducto());
+        productoEncontrado.setNombreProducto(req.getNombreProducto());
+        productoEncontrado.setDescripcionProducto(req.getDescripcionProducto());
+        productoEncontrado.setPrecioProductos(req.getPrecioProductos());
+        productoEncontrado.setStockProducto(req.getStockProducto());
+        productoEncontrado.setStockCritico(req.getStockCritico());
+
+        return categoriaProductoRepository.save(categoria);
+    }
 }

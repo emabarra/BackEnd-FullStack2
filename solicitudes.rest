@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:5000
+
+### 1. Crear una categoría de producto (POST)
+### Crear Fruta fresca
+POST {{baseUrl}}/api/categoria
+Content-Type: application/json
+
+{
+  "nombreCategoria": "Fruta fresca"
+}
+
+### Crear Productos lácteos
+POST {{baseUrl}}/api/categoria
+Content-Type: application/json
+
+{
+  "nombreCategoria": "Productos lacteos"
+}
+
+### Crear Productos orgánicos
+POST {{baseUrl}}/api/categoria
+Content-Type: application/json
+
+{
+  "nombreCategoria": "Productos orgánicos"
+}
+
+### Crear Verdura orgánica
+POST {{baseUrl}}/api/categoria
+Content-Type: application/json
+
+{
+  "nombreCategoria": "Verdura organica"
+}
+
+### 2. Listar todas las categorías (GET)
+GET {{baseUrl}}/api/categoria
+Accept: application/json
+
+### Agregar producto a una categoría existente
+POST {{baseUrl}}/api/categoria/producto
+Content-Type: application/json
+
+{
+  "idCategoria": 6,
+  "codigoProducto": "FR001",
+  "nombreProducto": "Manzanas Fuji",
+  "descripcionProducto": "Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule. Perfectas para meriendas saludables o como ingrediente en postres.",
+  "precioProductos": 1200,
+  "stockProducto": 150,
+  "stockCritico": 10
+}
+### Actualizar un producto existente
+PUT {{baseUrl}}/api/categoria/producto
+Content-Type: application/json
+
+{
+  "idProductos": 1,
+  "idCategoria": 6,
+  "codigoProducto": "FR001",
+  "nombreProducto": "Manzanas Fuji Premium",
+  "descripcionProducto": "Manzanas Fuji seleccionadas del Valle del Maule, cosecha fresca.",
+  "precioProductos": 1350,
+  "stockProducto": 120,
+  "stockCritico": 15
+}
+
+### 5. Eliminar un producto por ID (DELETE)
+DELETE {{baseUrl}}/api/producto/1
+
+### 
+DELETE {{baseUrl}}/api/categoria/12
+
+### 6. Registrar un cliente en fidelización (POST)
+POST {{baseUrl}}/api/fidelizacion
+Content-Type: application/json
+
+{
+  "nombreFidelizado": "Ana",
+  "apellidoFidelizado": "Pérez",
+  "correoFidelizado": "ana.perez@correo.cl",
+  "telefonoFidelizado": "+56912345678"
+}

@@ -16,8 +16,8 @@ import com.duoc.huerto.model.request.ActualizarFidelizacion;
 import com.duoc.huerto.model.request.AgregarFidelizacion;
 import com.duoc.huerto.services.FidelizacionService;
 
-@RestController ("fidelizacion")
-@RequestMapping 
+@RestController 
+@RequestMapping("/api/fidelizacion")
 public class FidelizacionController {
 
     @Autowired 

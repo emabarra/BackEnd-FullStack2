@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.duoc.huerto.model.entities.CategoriaProduto;
 import com.duoc.huerto.model.request.ActualizarCategoriaProducto;
+import com.duoc.huerto.model.request.ActualizarProducto;
 import com.duoc.huerto.model.request.AgregarCategoriaProducto;
 import com.duoc.huerto.services.CategoriaProductosService;
 
@@ -21,12 +22,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import com.duoc.huerto.model.request.AgregarProducto;
 
 
 
 
-@RestController("categoria")
-@RequestMapping 
+@RestController
+@RequestMapping("/api/categoria") 
 public class CategoriaProductoController {
     
     @Autowired 
@@ -50,10 +52,20 @@ public class CategoriaProductoController {
     public CategoriaProduto agregarCategoria(@RequestBody AgregarCategoriaProducto nuevo) {
         return categoriaProductosService.agregarCategoria(nuevo);
     }
+
+    @PostMapping ("/producto")
+    public CategoriaProduto agregarProducto(@RequestBody AgregarProducto nuevoProducto){
+        return categoriaProductosService.agregarProductoACategoria(nuevoProducto);
+    }
     
     @PutMapping("")
     public CategoriaProduto actualizarCategoria(@RequestBody ActualizarCategoriaProducto nuevo) {
         return categoriaProductosService.actualizarCategoria(nuevo);
+    }
+
+    @PutMapping("/producto")
+    public CategoriaProduto actualizarProducto(@RequestBody ActualizarProducto productoActualizado) {
+        return categoriaProductosService.actualizarProductoEnCategoria(productoActualizado);
     }
 
     @DeleteMapping("/{idCategoria}")

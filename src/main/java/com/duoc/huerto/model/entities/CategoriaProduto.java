@@ -1,25 +1,27 @@
 package com.duoc.huerto.model.entities;
 
-import org.springframework.hateoas.RepresentationModel;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Entity 
-@Data 
-@Table (name = "categoriaProductos")
-public class CategoriaProduto extends RepresentationModel<CategoriaProduto>{
-    
-    @Id 
+@Entity
+@Data
+@Table(name = "categoria_productos")
+public class CategoriaProduto {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_categoria;
+    private int idCategoria; // Verifica si en tu clase se llama idCategoria o id_categoria
 
     @Column(nullable = false)
     private String nombre_categoria;
 
+    @OneToMany(mappedBy = "categoriaProduto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Producto> productos = new ArrayList<>();
 }

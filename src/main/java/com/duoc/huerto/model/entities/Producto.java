@@ -1,22 +1,19 @@
 package com.duoc.huerto.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity 
-@Data 
-@Table (name = "producto")
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Entity
+@Data
+@Table(name = "producto")
 public class Producto {
-    
-    @Id 
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_productos;
 
     @Column(nullable = false)
@@ -28,7 +25,10 @@ public class Producto {
     @Column(nullable = false)
     private int precioProductos, stockProducto, stockCritico;
 
-    @ManyToOne 
+    @ManyToOne
     @JoinColumn(name = "id_categoria", nullable = false)
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private CategoriaProduto categoriaProduto;
 }

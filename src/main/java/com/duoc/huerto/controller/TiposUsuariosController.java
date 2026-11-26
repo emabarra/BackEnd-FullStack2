@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 
-@RequestMapping("tiposusuarios")
+@RequestMapping("/api/tiposusuarios")
 @RestController 
 public class TiposUsuariosController {
     
